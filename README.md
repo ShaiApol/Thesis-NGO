@@ -1,9 +1,3 @@
-# Prototype NGO
+# Thesis-NGO
 
-A new Flutter project.
-# Thesis-NGO
-# Thesis-NGO
-# Thesis-NGO
-# Thesis-NGO
-# Thesis-NGO
-# Thesis-NGO
+Maria Shaina Apolinar

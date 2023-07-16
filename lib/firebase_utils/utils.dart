@@ -22,6 +22,7 @@ Future<UserData?> retrieveUserFromFirebase(String email) async {
       ),
       phoneNum: userData['phone_number'],
       address: userData['address'],
+      profilePicture: userData['profile_picture'],
       email: userData['email'],
       governmentID: userData['government_id'],
       idNumber: userData['id_number'],
@@ -29,7 +30,6 @@ Future<UserData?> retrieveUserFromFirebase(String email) async {
       verified: userData['verified'],
       rejected: userData['rejected'],
     );
-    model.profilePicture = await retrieveProfilePictureFromStorage(email);
     return model;
   }
   return null;

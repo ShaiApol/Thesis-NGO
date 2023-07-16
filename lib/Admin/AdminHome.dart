@@ -76,11 +76,18 @@ class _AdminHomeState extends State<AdminHome> {
                                 ],
                               ),
                             ),
-                            Icon(
-                              Icons.person,
-                              color: Colors.black,
-                              size: 48,
-                            )
+                            if (userSingleton.profilePicture != null)
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundImage: NetworkImage(
+                                    userSingleton.user!.profilePicture!),
+                              )
+                            else
+                              Icon(
+                                Icons.person,
+                                color: Colors.black,
+                                size: 48,
+                              ),
                           ],
                         ),
                         SizedBox(

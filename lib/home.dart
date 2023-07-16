@@ -80,11 +80,19 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
-                          Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 48,
-                          )
+                          if (userSingleton.user!.profilePicture != null)
+                            CircleAvatar(
+                                radius: 32,
+                                backgroundImage: NetworkImage(
+                                    userSingleton.user!.profilePicture!))
+                          else
+                            CircleAvatar(
+                              radius: 32,
+                              child: Icon(
+                                Icons.person,
+                                size: 32,
+                              ),
+                            ),
                         ],
                       ),
                       SizedBox(

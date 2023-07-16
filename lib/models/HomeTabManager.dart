@@ -242,7 +242,13 @@ class _HomeTabManagerState extends State<HomeTabManager> {
               ),
               if (rewards.isNotEmpty)
                 ...rewards.map((e) {
-                  return e.renderAsRowExpandedCard(onPressed: () {});
+                  return e.renderAsRowExpandedCard(onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return e.renderAsBottomModal(context);
+                        });
+                  });
                 }).toList()
               else
                 Header3(

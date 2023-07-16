@@ -21,6 +21,7 @@ class RewardFetcher {
       rewards.add(Reward(
         id: doc.id,
         name: data['name'],
+        code: data['code'],
         description: data['description'],
         date: data['date'],
         requirements: data['requirements'],

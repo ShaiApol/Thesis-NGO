@@ -73,10 +73,16 @@ class _MessagesState extends State<Messages> {
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24)),
-                          child: Image.network(
-                            receipient['profile_picture'],
-                            fit: BoxFit.contain,
-                          ),
+                          child: receipient['profile_picture'] != null
+                              ? Image.network(
+                                  receipient['profile_picture'],
+                                  fit: BoxFit.contain,
+                                )
+                              : Icon(
+                                  Icons.person,
+                                  size: 36,
+                                  color: Colors.white,
+                                ),
                         ),
                       )
                     else

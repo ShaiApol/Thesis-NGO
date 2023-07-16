@@ -7,6 +7,7 @@ import 'package:project_ngo/Admin/AdminHome.dart';
 import 'package:project_ngo/main.dart';
 
 import 'Search.dart';
+import 'models/EditProfile.dart';
 
 class TitleText extends StatelessWidget {
   String text;
@@ -271,7 +272,8 @@ class BottomBar extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              FirebaseAuth.instance.signOut();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EditProfile()));
             },
             child: Icon(
               Icons.person,

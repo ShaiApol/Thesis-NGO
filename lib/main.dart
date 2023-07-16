@@ -171,6 +171,10 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController idNumberController = TextEditingController();
+  TextEditingController skillsController = TextEditingController();
+  TextEditingController experiencesController = TextEditingController();
+  TextEditingController reasonController = TextEditingController();
+  TextEditingController referralController = TextEditingController();
 
   bool fNameValid = true;
   bool lNameValid = true;
@@ -181,6 +185,10 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
   bool emailValid = true;
   bool governmentIDValid = true;
   bool idNumberValid = true;
+  bool skillsValid = true;
+  bool experiencesValid = true;
+  bool reasonValid = true;
+  bool referralValid = true;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -682,7 +690,191 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                           ],
                         ),
                         SizedBox(
-                          height: 32,
+                          height: 16,
+                        ),
+                        Header3(text: "Skills"),
+                        if (!addressValid) ...[
+                          Row(children: [
+                            Expanded(
+                                child: Text(
+                              "This field is required",
+                              style: TextStyle(color: Colors.red),
+                            ))
+                          ]),
+                          SizedBox(
+                            height: 8,
+                          )
+                        ],
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xFF28404F),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: TextFormField(
+                                      maxLines: 4,
+                                      controller: skillsController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Header3(text: "Experiences Relevant to Volunteering"),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        if (!experiencesValid) ...[
+                          Row(children: [
+                            Expanded(
+                                child: Text(
+                              "This field is required",
+                              style: TextStyle(color: Colors.red),
+                            ))
+                          ]),
+                          SizedBox(
+                            height: 8,
+                          )
+                        ],
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xFF28404F),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: TextFormField(
+                                      maxLines: 4,
+                                      controller: experiencesController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Header3(text: "Reason for Volunteering"),
+                        if (!reasonValid) ...[
+                          Row(children: [
+                            Expanded(
+                                child: Text(
+                              "This field is required",
+                              style: TextStyle(color: Colors.red),
+                            ))
+                          ]),
+                          SizedBox(
+                            height: 8,
+                          )
+                        ],
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xFF28404F),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: TextFormField(
+                                      maxLines: 4,
+                                      controller: reasonController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        Header3(text: "How did you hear about VT Ready?"),
+                        if (!referralValid) ...[
+                          Row(children: [
+                            Expanded(
+                                child: Text(
+                              "This field is required",
+                              style: TextStyle(color: Colors.red),
+                            ))
+                          ]),
+                          SizedBox(
+                            height: 8,
+                          )
+                        ],
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Color(0xFF28404F),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                        child: TextFormField(
+                                      maxLines: 2,
+                                      controller: referralController,
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+                                    ))
+                                  ],
+                                ),
+                              ),
+                            )),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16,
                         ),
                         Row(
                           children: [
@@ -745,7 +937,9 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                   });
                                 }
 
-                                if (emailController.text.isEmpty) {
+                                if (!RegExp(
+                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(emailController.text)) {
                                   no_errors = false;
                                   setState(() {
                                     emailValid = false;
@@ -755,8 +949,10 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                     emailValid = true;
                                   });
                                 }
-
-                                if (passwordController.text.isEmpty) {
+                                //The password should be 8 chars long, have one upper and lowercase character, a number, and a special character.
+                                if (!RegExp(
+                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[?!@#\$&*~]).{8,}$')
+                                    .hasMatch(passwordController.text)) {
                                   no_errors = false;
                                   setState(() {
                                     passwordValid = false;
@@ -786,6 +982,50 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
                                 } else {
                                   setState(() {
                                     idNumberValid = true;
+                                  });
+                                }
+
+                                if (skillsController.text.isEmpty) {
+                                  no_errors = false;
+                                  setState(() {
+                                    skillsValid = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    skillsValid = true;
+                                  });
+                                }
+
+                                if (experiencesController.text.isEmpty) {
+                                  no_errors = false;
+                                  setState(() {
+                                    experiencesValid = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    experiencesValid = true;
+                                  });
+                                }
+
+                                if (reasonController.text.isEmpty) {
+                                  no_errors = false;
+                                  setState(() {
+                                    reasonValid = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    reasonValid = true;
+                                  });
+                                }
+
+                                if (referralController.text.isEmpty) {
+                                  no_errors = false;
+                                  setState(() {
+                                    referralValid = false;
+                                  });
+                                } else {
+                                  setState(() {
+                                    referralValid = true;
                                   });
                                 }
 

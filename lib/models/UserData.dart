@@ -31,6 +31,7 @@ class UserData {
       required this.account_type,
       required this.verified,
       required this.rejected,
+      this.profilePicture,
       this.registered_activities});
 
   Map<String, dynamic> serializeIntoMap() {
@@ -47,7 +48,8 @@ class UserData {
       'email': email,
       'governmentID': governmentID,
       'idNumber': idNumber,
-      'account_type': account_type
+      'account_type': account_type,
+      'profile_picture': profilePicture
     };
   }
 

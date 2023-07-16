@@ -176,28 +176,12 @@ class _MessageState extends State<Message> {
                                   SizedBox(
                                     width: 12,
                                   ),
-                                  if (widget.profile_picture.isNotEmpty)
-                                    Container(
-                                      height: 32,
-                                      width: 32,
-                                      padding: EdgeInsets.all(2),
-                                      clipBehavior: Clip.hardEdge,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Color(0xFFFCCD00),
-                                              width: 2),
-                                          borderRadius:
-                                              BorderRadius.circular(24)),
-                                      child: Container(
-                                        clipBehavior: Clip.hardEdge,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(24)),
-                                        child: Image.network(
-                                          widget.profile_picture,
-                                          fit: BoxFit.contain,
-                                        ),
-                                      ),
+                                  if (userSingleton.user!.profilePicture !=
+                                      null)
+                                    CircleAvatar(
+                                      radius: 16,
+                                      backgroundImage: NetworkImage(
+                                          userSingleton.user!.profilePicture!),
                                     )
                                   else
                                     Icon(Icons.person,

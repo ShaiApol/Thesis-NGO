@@ -1,3 +1,3 @@
-# project_ngo
+# Thesis-NGO
 
-A new Flutter project.
+Maria Shaina Apolinar

@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:project_ngo/Admin/AdminHomeTabManager.dart';
 import 'package:project_ngo/Admin/EditTrainingMaterials.dart';
 import 'package:project_ngo/Admin/ManageEvents.dart';
@@ -45,6 +48,23 @@ class _AdminHomeState extends State<AdminHome> {
     });
   }
 
+  @override
+  void initState() {
+    var locPerms = Permission.location.request().then((locPerms) async {
+      if (locPerms.isGranted) {
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(userSingleton.user!.email)
+            .update({"location": "${position.latitude},${position.longitude}"});
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Theme(
         data: AdminTheme,

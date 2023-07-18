@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:project_ngo/components.dart';
 import 'package:project_ngo/models/HomeTabManager.dart';
 import 'package:project_ngo/models/UserSingleton.dart';
@@ -24,6 +27,22 @@ class _HomeState extends State<Home> {
     setState(() {
       state = category;
     });
+  }
+
+  @override
+  void initState() {
+    var locPerms = Permission.location.request().then((locPerms) async {
+      if (locPerms.isGranted) {
+        Position position = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(userSingleton.user!.email)
+            .update({"location": "${position.latitude},${position.longitude}"});
+      }
+    });
+
+    super.initState();
   }
 
   @override

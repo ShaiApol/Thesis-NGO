@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +100,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 8,
                 ),
-                if (!emailValid) ...[
+                if (!passwordValid) ...[
                   Row(children: [
                     Expanded(
                         child: Text(
@@ -200,8 +202,151 @@ class _LoginState extends State<Login> {
             ),
           ),
         ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Forgot your password?"),
+            TextButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) {
+                        return Padding(
+                            padding: MediaQuery.of(context).viewInsets,
+                            child: ResetPasswordModal());
+                      });
+                },
+                child: Text("Reset password."))
+          ],
+        ),
         Expanded(child: SizedBox.shrink())
       ],
     ));
+  }
+}
+
+class ResetPasswordModal extends StatefulWidget {
+  _ResetPasswordModalState createState() => _ResetPasswordModalState();
+}
+
+class _ResetPasswordModalState extends State<ResetPasswordModal> {
+  TextEditingController emailController = TextEditingController();
+  bool emailValid = true;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 400,
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              "Enter your email address to reset your password.",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              "We will send a password reset link to this email. If you do not receive the email, please check your spam folder.",
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            if (!emailValid) ...[
+              Row(children: [
+                Expanded(
+                    child: Text(
+                  "Please enter a valid email",
+                  style: TextStyle(color: Colors.red),
+                ))
+              ]),
+              SizedBox(
+                height: 8,
+              )
+            ],
+            Row(
+              children: [
+                Expanded(
+                    child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 4),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Color(0xFF28404F),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: TextFormField(
+                          controller: emailController,
+                          decoration: InputDecoration(
+                            hintText: "Enter your email",
+                            hintStyle: TextStyle(color: Colors.white),
+                            border: InputBorder.none,
+                          ),
+                        ))
+                      ],
+                    ),
+                  ),
+                )),
+              ],
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                Expanded(
+                    child: ElevatedButton(
+                  onPressed: () async {
+                    if (emailController.text != "" &&
+                        RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            .hasMatch(emailController.text)) {
+                      FirebaseAuth auth = FirebaseAuth.instance;
+                      auth.sendPasswordResetEmail(email: emailController.text);
+                      Navigator.pop(context);
+                    } else {
+                      setState(() {
+                        emailValid = false;
+                      });
+                    }
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Send Reset Link",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.black,
+                        )
+                      ],
+                    ),
+                  ),
+                ))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

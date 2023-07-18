@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:project_ngo/Admin/AdminEditProfile.dart';
 import 'package:project_ngo/Admin/AdminHome.dart';
 import 'package:project_ngo/main.dart';
 
@@ -210,8 +211,8 @@ class AdminBottomBar extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              FirebaseAuth.instance.signOut().then((value) => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => MainApp())));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AdminEditProfile()));
             },
             child: Icon(
               Icons.person,

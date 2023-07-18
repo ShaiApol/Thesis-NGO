@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:project_ngo/Admin/AttendanceMonitoring.dart';
 import 'package:project_ngo/Admin/EditTrainingMaterials.dart';
+import 'package:project_ngo/Admin/Heatmap.dart';
 import 'package:project_ngo/Admin/ManageApplicants.dart';
 import 'package:project_ngo/Admin/ManageEvents.dart';
 import 'package:project_ngo/Admin/ManageTrainings.dart';
@@ -16,6 +17,7 @@ import 'package:project_ngo/Admin/ManageRewards.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'Cards.dart';
+import 'EditTrainingBudget.dart';
 import 'Event.dart';
 import 'EventDetails.dart';
 import 'EventFetcher.dart';
@@ -170,7 +172,12 @@ class _AdminHomeTabManagerState extends State<AdminHomeTabManager> {
                                 textAlign: TextAlign.center,
                               )),
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return Heatmap();
+                                }));
+                              },
                               child: Text(
                                 "Heatmap of Volunteers",
                                 textAlign: TextAlign.center,
@@ -190,7 +197,12 @@ class _AdminHomeTabManagerState extends State<AdminHomeTabManager> {
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.zero,
                                   minimumSize: Size.zero),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return EditTrainingBudget();
+                                }));
+                              },
                               child: Text(
                                 "Manage Training Budget",
                                 textAlign: TextAlign.center,

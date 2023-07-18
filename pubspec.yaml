@@ -16,10 +16,14 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.7
+  flutter_webview_plugin: ^0.4.0
+  geolocator: ^9.0.2
   http: ^1.1.0
   image_picker: ^1.0.0
+  permission_handler: ^10.4.3
   syncfusion_flutter_calendar: ^22.1.37
   syncfusion_flutter_charts: ^22.1.37
+  webview_flutter: ^4.2.2
 
 dev_dependencies:
   flutter_test:

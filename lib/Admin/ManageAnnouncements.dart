@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:project_ngo/Admin/CreateNewAnnouncement.dart';
 import 'package:project_ngo/components.dart';
 
+import 'Announcement.dart';
 import 'CreateNewReward.dart';
 
 ThemeData data = ThemeData(
@@ -27,12 +29,12 @@ ThemeData data = ThemeData(
     // You can customize more theme properties here if needed
     );
 
-class ManageRewards extends StatefulWidget {
+class ManageAnnouncements extends StatefulWidget {
   @override
-  _ManageRewardsState createState() => _ManageRewardsState();
+  _ManageAnnouncementsState createState() => _ManageAnnouncementsState();
 }
 
-class _ManageRewardsState extends State<ManageRewards> {
+class _ManageAnnouncementsState extends State<ManageAnnouncements> {
   int length = 0;
   Future<List<QueryDocumentSnapshot>> getRewards() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -122,8 +124,22 @@ class _ManageRewardsState extends State<ManageRewards> {
                                                         Row(
                                                           children: [
                                                             TextButton(
-                                                                onPressed:
-                                                                    () {},
+                                                                onPressed: () {
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) {
+                                                                    return CreateNewAnnouncement(
+                                                                        announcementOverride: Announcement(
+                                                                            id: e
+                                                                                .id,
+                                                                            name:
+                                                                                data["name"],
+                                                                            content: data["description"],
+                                                                            photo: data["photo"]));
+                                                                  }));
+                                                                },
                                                                 child: Text(
                                                                     "Edit")),
                                                             TextButton(
@@ -134,7 +150,7 @@ class _ManageRewardsState extends State<ManageRewards> {
                                                                           .instance;
                                                                   firestore
                                                                       .collection(
-                                                                          "rewards")
+                                                                          "announcements")
                                                                       .doc(e.id)
                                                                       .delete();
                                                                 },
@@ -166,7 +182,7 @@ class _ManageRewardsState extends State<ManageRewards> {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return CreateNewReward();
+                      return CreateNewAnnouncement();
                     }));
                   },
                   style: ElevatedButton.styleFrom(
@@ -178,7 +194,7 @@ class _ManageRewardsState extends State<ManageRewards> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Add New Reward",
+                        Text("Add New Announcement",
                             style:
                                 TextStyle(color: Colors.black, fontSize: 16)),
                         SizedBox(

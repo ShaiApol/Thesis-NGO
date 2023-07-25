@@ -189,20 +189,106 @@ class _ManageEventsState extends State<ManageEvents> {
                                                                       "Edit")),
                                                               TextButton(
                                                                   onPressed:
-                                                                      () {
-                                                                    FirebaseFirestore
-                                                                        firestore =
-                                                                        FirebaseFirestore
-                                                                            .instance;
-                                                                    firestore
-                                                                        .collection(
-                                                                            "events")
-                                                                        .doc(e
-                                                                            .id)
-                                                                        .delete();
+                                                                      () async {
+                                                                    var cancel =
+                                                                        await showModalBottomSheet(
+                                                                            context:
+                                                                                context,
+                                                                            builder:
+                                                                                (context) {
+                                                                              return Container(
+                                                                                padding: EdgeInsets.all(16),
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    Expanded(child: SizedBox.shrink()),
+                                                                                    Text(
+                                                                                      "Are you sure you want to cancel this activity?",
+                                                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                                                                                      textAlign: TextAlign.center,
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 16,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "Doing so will send a notification to all registered participants in the form of an announcement and a system message in the activity's group chat.",
+                                                                                      textAlign: TextAlign.center,
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 32,
+                                                                                    ),
+                                                                                    Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                      children: [
+                                                                                        ElevatedButton(
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context, true);
+                                                                                            },
+                                                                                            child: Text("Yes")),
+                                                                                        ElevatedButton(
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context, false);
+                                                                                            },
+                                                                                            child: Text("No"))
+                                                                                      ],
+                                                                                    ),
+                                                                                    Expanded(child: SizedBox.shrink())
+                                                                                  ],
+                                                                                ),
+                                                                              );
+                                                                            });
+
+                                                                    if (cancel) {
+                                                                      FirebaseFirestore
+                                                                          firestore =
+                                                                          FirebaseFirestore
+                                                                              .instance;
+                                                                      await firestore
+                                                                          .collection(
+                                                                              "events")
+                                                                          .doc(e
+                                                                              .id)
+                                                                          .update({
+                                                                        "cancelled":
+                                                                            true
+                                                                      });
+
+                                                                      await firestore
+                                                                          .collection(
+                                                                              "announcements")
+                                                                          .add({
+                                                                        "date":
+                                                                            DateTime.now(),
+                                                                        "name":
+                                                                            "${(e.data() as Map)['name']} Cancelled",
+                                                                        "description":
+                                                                            "The event ${(e.data() as Map)['name']} has been cancelled.",
+                                                                        "photo":
+                                                                            (e.data()
+                                                                                as Map)['photo']
+                                                                      });
+                                                                    } else {
+                                                                      FirebaseFirestore
+                                                                          firestore =
+                                                                          FirebaseFirestore
+                                                                              .instance;
+                                                                      firestore
+                                                                          .collection(
+                                                                              "events")
+                                                                          .doc(e
+                                                                              .id)
+                                                                          .update({
+                                                                        "cancelled":
+                                                                            false
+                                                                      });
+                                                                    }
                                                                   },
-                                                                  child: Text(
-                                                                      "Delete"))
+                                                                  child: (e.data()
+                                                                              as Map)[
+                                                                          'cancelled']
+                                                                      ? Text(
+                                                                          "Cancelled")
+                                                                      : Text(
+                                                                          "Cancel")),
                                                             ],
                                                           )
                                                         ],

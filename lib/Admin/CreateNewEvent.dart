@@ -9,6 +9,7 @@ import 'package:project_ngo/components.dart';
 import 'package:project_ngo/firebase_utils/utils.dart';
 
 import '../Admin/Event.dart';
+import '../models/UserSingleton.dart';
 
 ThemeData data = ThemeData(
     primaryColor:
@@ -66,6 +67,26 @@ class _CreateNewEventState extends State<CreateNewEvent> {
         year = picked.year.toString();
       });
     }
+  }
+
+  Future<void> setUpNewGroupMessage(String id, String eventName) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    await firestore.collection("group_messages").doc(id).set({
+      "last_sender":
+          "Admin ${UserSingleton().user!.fName} ${UserSingleton().user!.lName} started a new training.",
+      "last_msg": "system",
+      "users": [UserSingleton().user!.email],
+      "name": eventName,
+      "activity_type": "events"
+    });
+
+    await firestore
+        .collection("users")
+        .doc(UserSingleton().user!.email)
+        .update({
+      "group_messages": FieldValue.arrayUnion([id])
+    });
   }
 
   @override
@@ -384,7 +405,10 @@ class _CreateNewEventState extends State<CreateNewEvent> {
                                           "description": eventDescription.text,
                                           "location": eventLocation.text,
                                           "name": eventName.text,
-                                        }).then((value) {
+                                          "cancelled": false,
+                                        }).then((value) async {
+                                          await setUpNewGroupMessage(
+                                              value.id, eventName.text);
                                           storage
                                               .ref(value.id)
                                               .putFile(_image!)

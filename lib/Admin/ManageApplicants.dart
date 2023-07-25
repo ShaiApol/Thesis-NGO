@@ -23,6 +23,7 @@ class _ApplicantsState extends State<Applicants> {
                     stream: FirebaseFirestore.instance
                         .collection("users")
                         .where("verified", isEqualTo: false)
+                        .where("rejected", isEqualTo: false)
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -77,6 +78,15 @@ class _ApplicantsState extends State<Applicants> {
                                       child: FittedBox(
                                           fit: BoxFit.fitWidth,
                                           child: Text('Approved',
+                                              style:
+                                                  TextStyle(fontSize: 20.0))))
+                                ]),
+                                Column(children: [
+                                  Padding(
+                                      padding: EdgeInsets.all(2),
+                                      child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text('Rejected',
                                               style:
                                                   TextStyle(fontSize: 20.0))))
                                 ]),
@@ -157,6 +167,27 @@ class _ApplicantsState extends State<Applicants> {
                                                           fontSize: 20.0)),
                                                 ))
                                           ])),
+                                  Padding(
+                                      padding: EdgeInsets.all(4),
+                                      child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            FittedBox(
+                                                fit: BoxFit.fitWidth,
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    FirebaseFirestore.instance
+                                                        .collection("users")
+                                                        .doc(e.id)
+                                                        .update(
+                                                            {"rejected": true});
+                                                  },
+                                                  child: Text('Reject',
+                                                      style: TextStyle(
+                                                          fontSize: 20.0)),
+                                                ))
+                                          ]))
                                 ]);
                               })
                             ],

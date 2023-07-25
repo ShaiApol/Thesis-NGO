@@ -67,41 +67,59 @@ class _MainAppState extends State<MainApp> {
       if (user != null) {
         await retrieveUserFromFirebase(user.email!).then((value) async {
           if (value != null) {
-            if (value.verified) {
-              UserSingleton userSingleton = UserSingleton();
-              userSingleton.user = value;
-              userSingleton.setProfilePicture(value.profilePicture);
-              if (userSingleton.user!.account_type == "user") {
-                CertificateFetcher fetcher =
-                    CertificateFetcher(email: user.email!);
+            UserSingleton userSingleton = UserSingleton();
+            userSingleton.user = value;
+            userSingleton.setProfilePicture(value.profilePicture);
+            if (userSingleton.user!.account_type == "user") {
+              CertificateFetcher fetcher =
+                  CertificateFetcher(email: user.email!);
 
-                await fetcher.fetch().then((value) {
-                  if (value != null) {
-                    log("Certificates added to User Singleton");
-                    userSingleton.user!.certificates = value;
-                  }
-                });
+              await fetcher.fetch().then((value) {
+                if (value != null) {
+                  log("Certificates added to User Singleton");
+                  userSingleton.user!.certificates = value;
+                }
+              });
 
-                Navigator.pushReplacement((context),
-                    MaterialPageRoute(builder: (context) {
-                  return Home();
-                }));
-              } else {
-                Navigator.pushReplacement((context),
-                    MaterialPageRoute(builder: (context) {
-                  return AdminHome();
-                }));
-              }
-            } else if (value.rejected) {
               Navigator.pushReplacement((context),
                   MaterialPageRoute(builder: (context) {
-                return Rejected();
+                return Home();
               }));
-            } else if (!value.verified) {
-              Navigator.pushReplacement((context),
-                  MaterialPageRoute(builder: (context) {
-                return WaitingVerify();
-              }));
+              // if (value.verified || !value.verified) {
+              //   UserSingleton userSingleton = UserSingleton();
+              //   userSingleton.user = value;
+              //   userSingleton.setProfilePicture(value.profilePicture);
+              //   if (userSingleton.user!.account_type == "user") {
+              //     CertificateFetcher fetcher =
+              //         CertificateFetcher(email: user.email!);
+
+              //     await fetcher.fetch().then((value) {
+              //       if (value != null) {
+              //         log("Certificates added to User Singleton");
+              //         userSingleton.user!.certificates = value;
+              //       }
+              //     });
+
+              //     Navigator.pushReplacement((context),
+              //         MaterialPageRoute(builder: (context) {
+              //       return Home();
+              //     }));
+              //   } else {
+              //     Navigator.pushReplacement((context),
+              //         MaterialPageRoute(builder: (context) {
+              //       return AdminHome();
+              //     }));
+              //   }
+              // } else if (value.rejected) {
+              //   Navigator.pushReplacement((context),
+              //       MaterialPageRoute(builder: (context) {
+              //     return Rejected();
+              //   }));
+              // } else if (!value.verified) {
+              //   Navigator.pushReplacement((context),
+              //       MaterialPageRoute(builder: (context) {
+              //     return WaitingVerify();
+              //   }));
             }
           }
         });

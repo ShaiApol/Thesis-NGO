@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ngo/Admin/AdminEditProfile.dart';
 import 'package:project_ngo/Admin/AdminHome.dart';
+import 'package:project_ngo/Admin/Organizations.dart';
+import 'package:project_ngo/home.dart';
 import 'package:project_ngo/main.dart';
+import 'package:project_ngo/models/Announcements.dart';
 
 import 'Search.dart';
 import 'models/EditProfile.dart';
@@ -104,6 +107,73 @@ class Body4 extends StatelessWidget {
   }
 }
 
+class UpBar extends StatelessWidget {
+  Function? setCategoryState;
+  UpBar({this.setCategoryState});
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Home()));
+              },
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    "assets/logo.svg",
+                    height: 28,
+                  ),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Text(
+                    "VT",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                  Text(
+                    "Ready",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xffFCCD00),
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
+            ),
+            Expanded(child: SizedBox.shrink()),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Announcements();
+                }));
+              },
+              child: Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(
+              width: 16,
+            ),
+            GestureDetector(
+              onTap: () {},
+              child: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+            )
+          ],
+        ));
+  }
+}
+
 class AdminUpBar extends StatelessWidget {
   Function? setCategoryState;
   AdminUpBar({this.setCategoryState});
@@ -129,24 +199,41 @@ class AdminUpBar extends StatelessWidget {
                   ),
                   Text(
                     "VT",
-                    style: TextStyle(fontSize: 28),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
-                    width: 8,
+                    width: 4,
                   ),
                   Text(
                     "Ready",
-                    style: TextStyle(fontSize: 28, color: Color(0xffFCCD00)),
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xffFCCD00),
+                        fontWeight: FontWeight.bold),
                   )
                 ],
               ),
             ),
             Expanded(child: SizedBox.shrink()),
-            Icon(Icons.notifications),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Announcements();
+                }));
+              },
+              child: Icon(Icons.notifications),
+            ),
             SizedBox(
               width: 16,
             ),
-            Icon(Icons.menu)
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Organizations();
+                }));
+              },
+              child: Icon(Icons.menu),
+            )
           ],
         ));
   }
@@ -159,7 +246,7 @@ class AdminBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 96,
-      decoration: BoxDecoration(color: Color(0xFF152F3E)),
+      decoration: BoxDecoration(color: Color(0xFF95D1F3)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
@@ -176,7 +263,7 @@ class AdminBottomBar extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24),
               height: 56,
               decoration: BoxDecoration(
-                  color: Color(0xFF102733),
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(48))),
               width: 140,
               child: Row(
@@ -206,7 +293,7 @@ class AdminBottomBar extends StatelessWidget {
             child: Icon(
               Icons.search,
               size: 32,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
           InkWell(
@@ -217,7 +304,7 @@ class AdminBottomBar extends StatelessWidget {
             child: Icon(
               Icons.person,
               size: 32,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ],

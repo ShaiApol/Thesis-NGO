@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:project_ngo/components.dart';
+import 'package:project_ngo/models/Announcements.dart';
 import 'package:project_ngo/models/HomeTabManager.dart';
 import 'package:project_ngo/models/UserSingleton.dart';
 
@@ -14,12 +15,14 @@ import 'models/Calendar.dart';
 import 'models/EventFetcher.dart';
 
 class Home extends StatefulWidget {
+  String state_override;
+  Home({this.state_override = "trainings"});
   @override
   State<StatefulWidget> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  String state = "events";
+  late String state;
   UserSingleton userSingleton = UserSingleton();
   EventFetcher eventFetcher = EventFetcher(email: UserSingleton().user!.email);
 
@@ -31,6 +34,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    state = widget.state_override;
     var locPerms = Permission.location.request().then((locPerms) async {
       if (locPerms.isGranted) {
         Position position = await Geolocator.getCurrentPosition(
@@ -48,96 +52,72 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SubTitleText(text: "VT Ready"),
-              Expanded(child: SizedBox.shrink()),
-              Icon(
-                Icons.notifications,
-                color: Colors.white,
-              ),
-              SizedBox(
-                width: 24,
-              ),
-              Icon(
-                Icons.rectangle,
-                color: Colors.white,
-              )
-            ],
-          ),
-        ),
         body: SafeArea(
-          child: Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  child: Column(
+      child: Container(
+        child: Column(
+          children: [
+            UpBar(),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Row(
                     children: [
-                      SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SubTitleText(
-                                    text:
-                                        "Hello, ${userSingleton.user!.fName}!"),
-                                SizedBox(
-                                  height: 4,
-                                ),
-                                Body4(
-                                    text:
-                                        "Let's explore what's happening nearby")
-                              ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SubTitleText(
+                                text: "Hello, ${userSingleton.user!.fName}!"),
+                            SizedBox(
+                              height: 4,
                             ),
+                            Body4(text: "Let's explore what's happening nearby")
+                          ],
+                        ),
+                      ),
+                      if (userSingleton.user!.profilePicture != null)
+                        CircleAvatar(
+                            radius: 32,
+                            backgroundImage: NetworkImage(
+                                userSingleton.user!.profilePicture!))
+                      else
+                        CircleAvatar(
+                          radius: 32,
+                          child: Icon(
+                            Icons.person,
+                            size: 32,
                           ),
-                          if (userSingleton.user!.profilePicture != null)
-                            CircleAvatar(
-                                radius: 32,
-                                backgroundImage: NetworkImage(
-                                    userSingleton.user!.profilePicture!))
-                          else
-                            CircleAvatar(
-                              radius: 32,
-                              child: Icon(
-                                Icons.person,
-                                size: 32,
-                              ),
-                            ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
-                      DateWidget(),
-                      SizedBox(
-                        height: 24,
-                      ),
-                      Header3(
-                        text: "What do you want to check today?",
-                        align: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
+                        ),
                     ],
                   ),
-                ),
-                CategoryFilter(setCategoryState: setCategoryState),
-                HomeTabManager(state: state, email: userSingleton.user!.email),
-                BottomBar()
-              ],
+                  SizedBox(
+                    height: 24,
+                  ),
+                  DateWidget(),
+                  SizedBox(
+                    height: 24,
+                  ),
+                  Header3(
+                    text: "What do you want to check today?",
+                    align: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ));
+            CategoryFilter(setCategoryState: setCategoryState),
+            HomeTabManager(state: state, email: userSingleton.user!.email),
+            BottomBar()
+          ],
+        ),
+      ),
+    ));
   }
 }
 

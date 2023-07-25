@@ -22,6 +22,7 @@ import 'Event.dart';
 import 'EventDetails.dart';
 import 'EventFetcher.dart';
 import 'IncidentReport.dart';
+import 'ManageAnnouncements.dart';
 import 'Reward.dart';
 import 'TrainingFetcher.dart';
 import 'RewardFetcher.dart';
@@ -119,7 +120,12 @@ class _AdminHomeTabManagerState extends State<AdminHomeTabManager> {
                                 textAlign: TextAlign.center,
                               )),
                           ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return ManageAnnouncements();
+                                }));
+                              },
                               style: ElevatedButton.styleFrom(
                                   padding: EdgeInsets.zero,
                                   minimumSize: Size.zero),

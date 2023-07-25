@@ -133,15 +133,34 @@ class _EventDetailsState extends State<EventDetails> {
                           if (register) {
                             FirebaseFirestore firestore =
                                 FirebaseFirestore.instance;
-                            firestore
+                            await firestore
                                 .collection("events")
                                 .doc(widget.event.id)
                                 .update({
                               "attendees": FieldValue.arrayUnion(
                                   [userSingleton.user!.email])
-                            }).then((value) {
-                              Navigator.pop(context);
                             });
+
+                            await firestore
+                                .collection("users")
+                                .doc(userSingleton.user!.email)
+                                .update({
+                              "last_msg":
+                                  "${userSingleton.user!.fName} registered for this activity and joined this chat.",
+                              "last_sender": "system",
+                              "group_messages":
+                                  FieldValue.arrayUnion([widget.event.id])
+                            });
+
+                            await firestore
+                                .collection("users")
+                                .doc(userSingleton.user!.email)
+                                .update({
+                              "group_messages":
+                                  FieldValue.arrayUnion([widget.event.id])
+                            });
+
+                            Navigator.pop(context);
                           }
                         },
                         child: Padding(
@@ -170,15 +189,69 @@ class _EventDetailsState extends State<EventDetails> {
                     return Row(
                       children: [
                         Expanded(
-                            child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 16),
-                          decoration: BoxDecoration(
-                              color: Color(0xFF283F4D),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Text(
-                            "Already registered for this Event",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 16),
+                            child: InkWell(
+                          onTap: () async {
+                            FirebaseFirestore firestore =
+                                FirebaseFirestore.instance;
+
+                            await firestore
+                                .collection("group_messages")
+                                .doc(widget.event.id)
+                                .update({
+                              "last_msg":
+                                  "${userSingleton.user!.fName} cancelled their registration and was removed from this chat.",
+                              "last_sender": "system",
+                              "users": FieldValue.arrayRemove(
+                                  [userSingleton.user!.email])
+                            });
+
+                            await firestore
+                                .collection("group_messages")
+                                .doc(widget.event.id)
+                                .collection("messages")
+                                .add({
+                              "message":
+                                  "${userSingleton.user!.fName} cancelled their registration and was removed from this chat.",
+                              "sender": "system",
+                              "timestamp": DateTime.now()
+                            });
+
+                            await firestore
+                                .collection("events")
+                                .doc(widget.event.id)
+                                .update({
+                              "attendees": FieldValue.arrayRemove(
+                                  [userSingleton.user!.email])
+                            });
+
+                            await firestore
+                                .collection("users")
+                                .doc(userSingleton.user!.email)
+                                .update({
+                              "group_messages":
+                                  FieldValue.arrayRemove([widget.event.id])
+                            });
+
+                            await firestore
+                                .collection("events")
+                                .doc(widget.event.id)
+                                .update({
+                              "attendees": FieldValue.arrayRemove(
+                                  [userSingleton.user!.email])
+                            }).then((value) {
+                              Navigator.pop(context);
+                            });
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 16),
+                            decoration: BoxDecoration(
+                                color: Color(0xFF283F4D),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Text(
+                              "Cancel Registration",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ),
                         ))
                       ],

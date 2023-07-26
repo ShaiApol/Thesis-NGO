@@ -120,6 +120,11 @@ class _MainAppState extends State<MainApp> {
               //       MaterialPageRoute(builder: (context) {
               //     return WaitingVerify();
               //   }));
+            } else {
+              Navigator.pushReplacement((context),
+                  MaterialPageRoute(builder: (context) {
+                return AdminHome();
+              }));
             }
           }
         });
@@ -138,11 +143,30 @@ class _MainAppState extends State<MainApp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TitleText(text: "VT Ready"),
+                Row(
+                  children: [
+                    Text(
+                      "VT",
+                      style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFFDCD01)),
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "Ready",
+                      style:
+                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
                 SizedBox(
                   height: 16,
                 ),
                 SubTitleText(
+                    align: TextAlign.left,
                     text:
                         "Volunteers and Training Information System for NGOs for Disaster Management."),
                 SizedBox(
@@ -156,7 +180,7 @@ class _MainAppState extends State<MainApp> {
                       return RegistrationWidget();
                     }));
                   },
-                  color: Colors.black,
+                  color: Colors.white,
                 )
               ],
             ),
@@ -214,6 +238,24 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
       initialDate: DateTime(1990, 1, 1),
       firstDate: DateTime(1900),
       lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.amberAccent, // <-- SEE HERE
+              onPrimary: Colors.black, // <-- SEE HERE
+              onSurface: Colors.black, // <-- SEE HERE
+            ),
+            textTheme: Typography.blackCupertino,
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                primary: Colors.red, // button text color
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null) {
@@ -235,7 +277,16 @@ class _RegistrationWidgetState extends State<RegistrationWidget> {
         child: Column(
           children: [
             Row(
-              children: [SmallerTitleText(text: "VT Ready")],
+              children: [
+                SmallerTitleText(
+                  text: "VT",
+                  color: Colors.amberAccent,
+                ),
+                SizedBox(
+                  width: 8,
+                ),
+                SmallerTitleText(text: "Ready")
+              ],
             ),
             SizedBox(
               height: 32,

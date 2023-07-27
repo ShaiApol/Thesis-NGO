@@ -199,7 +199,10 @@ class AdminUpBar extends StatelessWidget {
                   ),
                   Text(
                     "VT",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
                   SizedBox(
                     width: 4,

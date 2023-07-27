@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ngo/GroupMessage.dart';
-import 'package:project_ngo/Message.dart';
+import 'package:project_ngo/Admin/Message.dart';
 import 'package:project_ngo/models/UserSingleton.dart';
 
 class Messages extends StatefulWidget {

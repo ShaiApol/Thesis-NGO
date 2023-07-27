@@ -67,7 +67,12 @@ class _MessageState extends State<Message> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
+      child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/fade_background.png"),
+                  fit: BoxFit.cover)),
           child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection("messages")
@@ -232,6 +237,6 @@ class _MessageState extends State<Message> {
                   ],
                 );
               })),
-    );
+    ));
   }
 }

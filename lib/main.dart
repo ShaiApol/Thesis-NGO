@@ -135,7 +135,12 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+        body: Container(
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/images/getting_started.png"),
+              fit: BoxFit.cover)),
+      child: Column(
         children: [
           Expanded(child: SizedBox.shrink()),
           Padding(
@@ -188,7 +193,7 @@ class _MainAppState extends State<MainApp> {
           Expanded(child: SizedBox.shrink()),
         ],
       ),
-    );
+    ));
   }
 }
 

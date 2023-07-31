@@ -144,10 +144,10 @@ class _CategoryFilterState extends State<CategoryFilter> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
-                  Icons.add_circle,
-                  color: Colors.white,
+                ImageIcon(
+                  AssetImage("assets/images/training_white.png"),
                   size: 32,
+                  color: Colors.white,
                 ),
                 SizedBox(
                   height: 4,

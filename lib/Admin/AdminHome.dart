@@ -166,9 +166,8 @@ class _CategoryFilterState extends State<CategoryFilter> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Icon(
-                      Icons.add_circle,
-                      color: Colors.black,
+                    ImageIcon(
+                      AssetImage("assets/images/training_black.png"),
                       size: 32,
                     ),
                     SizedBox(

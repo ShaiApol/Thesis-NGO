@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ngo/Admin/AdminEditProfile.dart';
 import 'package:project_ngo/Admin/AdminHome.dart';
-import 'package:project_ngo/Admin/Organizations.dart';
+import 'package:project_ngo/models/Organizations.dart';
 import 'package:project_ngo/home.dart';
 import 'package:project_ngo/main.dart';
 import 'package:project_ngo/models/Announcements.dart';
@@ -163,7 +163,11 @@ class UpBar extends StatelessWidget {
               width: 16,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Organizations();
+                }));
+              },
               child: Icon(
                 Icons.menu,
                 color: Colors.white,
@@ -185,6 +189,7 @@ class AdminUpBar extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AdminHome()));
               },
@@ -220,6 +225,7 @@ class AdminUpBar extends StatelessWidget {
             Expanded(child: SizedBox.shrink()),
             GestureDetector(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return Announcements();
                 }));
@@ -231,6 +237,7 @@ class AdminUpBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return Organizations();
                 }));
@@ -258,6 +265,7 @@ class AdminBottomBar extends StatelessWidget {
               if (setCategoryState != null) {
                 setCategoryState!("home");
               } else {
+                Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AdminHome()));
               }

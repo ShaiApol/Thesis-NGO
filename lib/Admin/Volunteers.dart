@@ -40,70 +40,87 @@ class _VolunteersState extends State<Volunteers> {
                       .get(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Table(
-                        border: TableBorder.all(),
+                      return ListView(
                         children: [
-                          TableRow(children: [
-                            TableCell(child: Text("Name")),
-                            TableCell(child: Text("Address")),
-                            TableCell(child: Text("Phone")),
-                            TableCell(child: Text("Certificates")),
-                            TableCell(child: Text("isActive")),
-                          ]),
-                          ...snapshot.data!.docs.map((e) {
-                            var data = e.data() as Map;
-                            return TableRow(children: [
-                              TableCell(
-                                  child: TextButton(
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (context) {
-                                              return UserInfo(
-                                                  data: UserData(
-                                                      fName: data['first_name'],
-                                                      lName: data['last_name'],
-                                                      dob: DateOfBirth(
-                                                          year: data[
-                                                                  'date_of_birth']
-                                                              ['year'],
-                                                          month:
-                                                              data['date_of_birth']
+                          Table(
+                            border: TableBorder.all(),
+                            children: [
+                              TableRow(children: [
+                                TableCell(child: Text("Name")),
+                                TableCell(child: Text("Address")),
+                                TableCell(child: Text("Phone")),
+                                TableCell(child: Text("Certificates")),
+                                TableCell(child: Text("isActive")),
+                              ]),
+                              ...snapshot.data!.docs.map((e) {
+                                var data = e.data() as Map;
+                                return TableRow(children: [
+                                  TableCell(
+                                      child: TextButton(
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder: (context) {
+                                                  return UserInfo(
+                                                      data: UserData(
+                                                          fName: data[
+                                                              'first_name'],
+                                                          lName:
+                                                              data['last_name'],
+                                                          dob: DateOfBirth(
+                                                              year: data['date_of_birth']
+                                                                  ['year'],
+                                                              month: data['date_of_birth']
                                                                   ['month'],
-                                                          day:
-                                                              data['date_of_birth']
+                                                              day: data['date_of_birth']
                                                                   ['day']),
-                                                      phoneNum:
-                                                          data['phone_number'],
-                                                      address: data["address"],
-                                                      profilePicture: data[
-                                                          'profile_picture'],
-                                                      email: data['email'],
-                                                      governmentID:
-                                                          data['government_id'],
-                                                      idNumber:
-                                                          data['id_number'],
-                                                      account_type:
-                                                          data['account_type'],
-                                                      verified:
-                                                          data['verified'],
-                                                      rejected:
-                                                          data['rejected']));
-                                            });
-                                      },
-                                      child: Text(data["first_name"] +
-                                          " " +
-                                          data["last_name"]))),
-                              TableCell(child: Text(data["address"])),
-                              TableCell(child: Text(data["phone_number"])),
-                              TableCell(
-                                  child: TextButton(
-                                      onPressed: () {},
-                                      child: Icon(Icons.folder))),
-                              TableCell(
-                                  child: Text(data["verified"].toString())),
-                            ]);
-                          })
+                                                          phoneNum: data[
+                                                              'phone_number'],
+                                                          address:
+                                                              data["address"],
+                                                          profilePicture: data[
+                                                              'profile_picture'],
+                                                          email: data['email'],
+                                                          governmentID: data[
+                                                              'government_id'],
+                                                          idNumber:
+                                                              data['id_number'],
+                                                          account_type:
+                                                              data['account_type'],
+                                                          verified: data['verified'],
+                                                          rejected: data['rejected']));
+                                                });
+                                          },
+                                          child: Text(data["first_name"] +
+                                              " " +
+                                              data["last_name"]))),
+                                  TableCell(child: Text(data["address"])),
+                                  TableCell(child: Text(data["phone_number"])),
+                                  TableCell(
+                                      child: TextButton(
+                                          onPressed: () {},
+                                          child: Icon(Icons.folder))),
+                                  TableCell(
+                                      child: Checkbox(
+                                    value: data["isActive"] ?? false,
+                                    onChanged: (value) {
+                                      FirebaseFirestore.instance
+                                          .collection("users")
+                                          .doc(data["email"])
+                                          .update({"isActive": value}).then(
+                                              (value) {
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return Volunteers();
+                                        }));
+                                      });
+                                    },
+                                  )),
+                                ]);
+                              })
+                            ],
+                          )
                         ],
                       );
                     } else if (snapshot.hasError) {

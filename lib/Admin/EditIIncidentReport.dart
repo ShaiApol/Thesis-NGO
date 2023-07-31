@@ -17,6 +17,8 @@ class _EditIncidentReportState extends State<EditIncidentReport> {
   TextEditingController incidentDetailsController = TextEditingController();
   TextEditingController damagesController = TextEditingController();
   TextEditingController resolutionController = TextEditingController();
+  //dropdown state
+  String? dropdownValue;
   TextEditingController repairPlanController = TextEditingController();
   bool policeNotified = false;
   bool solved = false;
@@ -27,6 +29,7 @@ class _EditIncidentReportState extends State<EditIncidentReport> {
   void initState() {
     super.initState();
     Map dataMap = widget.data.data() as Map;
+    dropdownValue = dataMap['type'] ?? "";
     locationController.text = dataMap['location'] ?? "";
     victimsController.text = dataMap['victims'].toString() ?? "";
     incidentDetailsController.text = dataMap['incident_details'] ?? "";
@@ -145,6 +148,57 @@ class _EditIncidentReportState extends State<EditIncidentReport> {
                               SizedBox(
                                 height: 8,
                               ),
+                              Row(
+                                children: [
+                                  Text("Incident Type"),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: DropdownButton(
+                                        value: dropdownValue,
+                                        items: <String>[
+                                          "",
+                                          'Big Waves',
+                                          'Coastal Erosion',
+                                          'Continuous Rains',
+                                          'Disease Outbreak',
+                                          'Drought',
+                                          'Earthquake',
+                                          'El Nino',
+                                          'Flashflood',
+                                          'Ground Movement',
+                                          'Landslide',
+                                          'Lightning Strike',
+                                          'LPA',
+                                          'Northeast Monsoons',
+                                          'Sea Swellings',
+                                          'Sinkhole',
+                                          'Southwest Monsoon',
+                                          'Tall End of a Coldfront',
+                                          'Thunderstorms',
+                                          'Tornadoes',
+                                          'Volcanic Activity',
+                                          'Wildfire',
+                                        ].map((e) {
+                                          return DropdownMenuItem<String>(
+                                            value: e,
+                                            child: Text(
+                                              e,
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (e) {
+                                          setState(() {
+                                            dropdownValue = e as String?;
+                                          });
+                                        }),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
                               Text("Incident Details"),
                               TextField(
                                 controller: incidentDetailsController,
@@ -239,6 +293,7 @@ class _EditIncidentReportState extends State<EditIncidentReport> {
                     "incident_details": incidentDetailsController.text,
                     "location": locationController.text,
                     "police_notified": policeNotified,
+                    "type": dropdownValue,
                     "repair_plan": repairPlanController.text,
                     "resolution": resolutionController.text,
                     "solved": solved,

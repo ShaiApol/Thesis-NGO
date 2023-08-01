@@ -51,7 +51,9 @@ class Reward extends Cards {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         SizedBox(height: 8),
                         Row(
@@ -64,8 +66,10 @@ class Reward extends Cards {
                             SizedBox(
                               width: 4,
                             ),
-                            Text("Valid till " +
-                                retrieveStringFormattedDate(date))
+                            Text(
+                                "Valid till " +
+                                    retrieveStringFormattedDate(date),
+                                style: TextStyle(color: Colors.white))
                           ],
                         ),
                       ],

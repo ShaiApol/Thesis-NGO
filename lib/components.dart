@@ -173,8 +173,8 @@ class UpBar extends StatelessWidget {
                   return Organizations();
                 }));
               },
-              child: Icon(
-                Icons.menu,
+              child: ImageIcon(
+                AssetImage("assets/images/diagram.png"),
                 color: Colors.white,
               ),
             )
@@ -241,14 +241,16 @@ class AdminUpBar extends StatelessWidget {
               width: 16,
             ),
             GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return AdminOrganizations();
-                }));
-              },
-              child: Icon(Icons.menu),
-            )
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AdminOrganizations();
+                  }));
+                },
+                child: ImageIcon(
+                  AssetImage("assets/images/diagram.png"),
+                  color: Colors.black,
+                ))
           ],
         ));
   }

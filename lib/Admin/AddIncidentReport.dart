@@ -22,6 +22,8 @@ class _AddIncidentReportState extends State<AddIncidentReport> {
   TextEditingController damagesController = TextEditingController();
   TextEditingController resolutionController = TextEditingController();
   TextEditingController repairPlanController = TextEditingController();
+  //dropdown state
+  String? dropdownValue;
   bool policeNotified = false;
   bool solved = false;
   String name = "";
@@ -163,6 +165,57 @@ class _AddIncidentReportState extends State<AddIncidentReport> {
                               SizedBox(
                                 height: 8,
                               ),
+                              Row(
+                                children: [
+                                  Text("Incident Type"),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: DropdownButton(
+                                        value: dropdownValue,
+                                        items: <String>[
+                                          "",
+                                          'Big Waves',
+                                          'Coastal Erosion',
+                                          'Continuous Rains',
+                                          'Disease Outbreak',
+                                          'Drought',
+                                          'Earthquake',
+                                          'El Nino',
+                                          'Flashflood',
+                                          'Ground Movement',
+                                          'Landslide',
+                                          'Lightning Strike',
+                                          'LPA',
+                                          'Northeast Monsoons',
+                                          'Sea Swellings',
+                                          'Sinkhole',
+                                          'Southwest Monsoon',
+                                          'Tall End of a Coldfront',
+                                          'Thunderstorms',
+                                          'Tornadoes',
+                                          'Volcanic Activity',
+                                          'Wildfire',
+                                        ].map((e) {
+                                          return DropdownMenuItem<String>(
+                                            value: e,
+                                            child: Text(
+                                              e,
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (e) {
+                                          setState(() {
+                                            dropdownValue = e as String?;
+                                          });
+                                        }),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                height: 8,
+                              ),
                               Text("Incident Details"),
                               TextField(
                                 controller: incidentDetailsController,
@@ -243,6 +296,15 @@ class _AddIncidentReportState extends State<AddIncidentReport> {
             )),
             ElevatedButton(
                 onPressed: () async {
+                  //lowercase then replace spaces with underscores
+                  var incident_type =
+                      dropdownValue!.toLowerCase().replaceAll(" ", "_");
+                  await FirebaseFirestore.instance
+                      .collection("incident_report")
+                      .doc("natural_accidents")
+                      .update({
+                    incident_type: FieldValue.increment(1),
+                  });
                   await FirebaseFirestore.instance
                       .collection("incident_report")
                       .doc("natural_accidents")
@@ -257,9 +319,11 @@ class _AddIncidentReportState extends State<AddIncidentReport> {
                     "police_notified": policeNotified,
                     "repair_plan": repairPlanController.text,
                     "resolution": resolutionController.text,
+                    "type": dropdownValue,
                     "solved": solved,
                     "victims": int.parse(victimsController.text)
                   });
+
                   Navigator.pop(context);
                 },
                 child: Text("Submit")),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ngo/Admin/AdminHome.dart';
+import 'package:project_ngo/Admin/OrgMessage.dart';
 import 'package:project_ngo/Message.dart';
 import 'package:project_ngo/components.dart';
 
@@ -29,7 +30,8 @@ class _OrganizationsState extends State<Organizations> {
             onTap: () {
               if (member['email'] != FirebaseAuth.instance.currentUser!.email) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Message(
+                  return OrgMessage(
+                      role: member['role'],
                       receipient: member['email'],
                       fName: member_doc.data()!['first_name'],
                       lName: member_doc.data()!['last_name']);
@@ -153,33 +155,30 @@ class _OrganizationsState extends State<Organizations> {
     return Theme(
         data: AdminTheme,
         child: Scaffold(
-          backgroundColor: Colors.grey[200],
-          appBar: AppBar(
-            elevation: 0,
-            iconTheme: IconThemeData(
-              color: Colors.black, //change your color here
-            ),
-            title: Text("Organizations", style: TextStyle(color: Colors.black)),
-            backgroundColor: Colors.white,
-          ),
-          body: Column(
-            children: [
-              if (organizations.isNotEmpty) ...[
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: ListView(children: organizations),
-                )),
-              ] else
-                Expanded(
-                    child: Center(
-                        child: Text(loading
-                            ? "Loading your Organizations..."
-                            : "You have no organizations to display"))),
-              BottomBar()
-            ],
-          ),
-        ));
+            backgroundColor: Colors.grey[200],
+            body: SafeArea(
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.white,
+                    child: UpBar(),
+                  ),
+                  if (organizations.isNotEmpty) ...[
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: ListView(children: organizations),
+                    )),
+                  ] else
+                    Expanded(
+                        child: Center(
+                            child: Text(loading
+                                ? "Loading your Organizations..."
+                                : "You have no organizations to display"))),
+                  BottomBar()
+                ],
+              ),
+            )));
   }
 }
 

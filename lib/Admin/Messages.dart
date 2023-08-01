@@ -203,7 +203,9 @@ class _MessagesState extends State<Messages> {
                         Text(
                           activity_doc.data()!["name"],
                           style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
                         ),
                         SizedBox(
                           height: 4,
@@ -215,14 +217,16 @@ class _MessagesState extends State<Messages> {
                                   maxWidth:
                                       MediaQuery.of(context).size.width * 0.75),
                               child: Text(
-                                ((future.data() as Map)['last_sender'] ==
-                                            userSingleton.user!.email
-                                        ? "You: "
-                                        : "") +
-                                    (future.data() as Map)['last_msg'],
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                                  ((future.data() as Map)['last_sender'] ==
+                                              userSingleton.user!.email
+                                          ? "You: "
+                                          : "") +
+                                      (future.data() as Map)['last_msg'],
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  )),
                             )
                           ],
                         )

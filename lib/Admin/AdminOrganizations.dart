@@ -5,12 +5,14 @@ import 'package:project_ngo/Admin/AdminHome.dart';
 import 'package:project_ngo/Admin/Message.dart';
 import 'package:project_ngo/components.dart';
 
-class Organizations extends StatefulWidget {
+import 'OrgMessage.dart';
+
+class AdminOrganizations extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _OrganizationsState();
+  State<StatefulWidget> createState() => _AdminOrganizationsState();
 }
 
-class _OrganizationsState extends State<Organizations> {
+class _AdminOrganizationsState extends State<AdminOrganizations> {
   bool loading = true;
   List<Widget> organizations = [];
   Future<void> getOrganizations() async {
@@ -29,7 +31,8 @@ class _OrganizationsState extends State<Organizations> {
             onTap: () {
               if (member['email'] != FirebaseAuth.instance.currentUser!.email) {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Message(
+                  return OrgMessage(
+                      role: member['role'],
                       receipient: member['email'],
                       fName: member_doc.data()!['first_name'],
                       lName: member_doc.data()!['last_name']);
@@ -180,56 +183,53 @@ class _OrganizationsState extends State<Organizations> {
     return Theme(
         data: AdminTheme,
         child: Scaffold(
-          backgroundColor: Colors.grey[200],
-          appBar: AppBar(
-            elevation: 0,
-            iconTheme: IconThemeData(
-              color: Colors.black, //change your color here
-            ),
-            title: Text("Organizations", style: TextStyle(color: Colors.black)),
-            backgroundColor: Colors.white,
-          ),
-          body: Column(
-            children: [
-              if (organizations.isNotEmpty) ...[
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: ListView(children: organizations),
-                )),
-              ] else
-                Expanded(
-                    child: Center(
-                        child: Text(loading
-                            ? "Loading your Organizations..."
-                            : "You have no organizations to display"))),
-              Row(
+            backgroundColor: Colors.grey[200],
+            body: SafeArea(
+              child: Column(
                 children: [
-                  Expanded(
-                      child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: ElevatedButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return CreateNewOrganizationModal(
-                                  refresh: getOrganizations,
-                                );
-                              });
-                        },
-                        child: Text(
-                          "Create a new Organization",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        )),
-                  ))
+                  Container(
+                    color: Colors.white,
+                    child: AdminUpBar(),
+                  ),
+                  if (organizations.isNotEmpty) ...[
+                    Expanded(
+                        child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: ListView(children: organizations),
+                    )),
+                  ] else
+                    Expanded(
+                        child: Center(
+                            child: Text(loading
+                                ? "Loading your Organizations..."
+                                : "You have no organizations to display"))),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Padding(
+                        padding: EdgeInsets.all(16),
+                        child: ElevatedButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return CreateNewOrganizationModal(
+                                      refresh: getOrganizations,
+                                    );
+                                  });
+                            },
+                            child: Text(
+                              "Create a new Organization",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            )),
+                      ))
+                    ],
+                  ),
+                  AdminBottomBar()
                 ],
               ),
-              AdminBottomBar()
-            ],
-          ),
-        ));
+            )));
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:project_ngo/Admin/AdminEditProfile.dart';
 import 'package:project_ngo/Admin/AdminHome.dart';
+import 'package:project_ngo/Admin/AdminOrganizations.dart';
 import 'package:project_ngo/models/Organizations.dart';
 import 'package:project_ngo/home.dart';
 import 'package:project_ngo/main.dart';
@@ -112,7 +113,8 @@ class UpBar extends StatelessWidget {
   UpBar({this.setCategoryState});
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+        color: Color(0xFF112732),
         padding: EdgeInsets.all(16),
         child: Row(
           children: [
@@ -132,7 +134,10 @@ class UpBar extends StatelessWidget {
                   ),
                   Text(
                     "VT",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   SizedBox(
                     width: 4,
@@ -239,7 +244,7 @@ class AdminUpBar extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Organizations();
+                  return AdminOrganizations();
                 }));
               },
               child: Icon(Icons.menu),
@@ -333,29 +338,35 @@ class BottomBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-            height: 56,
-            decoration: BoxDecoration(
-                color: Color(0xFF102733),
-                borderRadius: BorderRadius.all(Radius.circular(48))),
-            width: 140,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  Icons.house,
-                  color: Color(0xFFFFA700),
-                  size: 32,
-                ),
-                Text(
-                  "Home",
-                  style: TextStyle(
-                      color: Color(0xFFFFA700),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                )
-              ],
+          GestureDetector(
+            onTap: () =>
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return Home();
+            })),
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              height: 56,
+              decoration: BoxDecoration(
+                  color: Color(0xFF102733),
+                  borderRadius: BorderRadius.all(Radius.circular(48))),
+              width: 140,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Icon(
+                    Icons.house,
+                    color: Color(0xFFFFA700),
+                    size: 32,
+                  ),
+                  Text(
+                    "Home",
+                    style: TextStyle(
+                        color: Color(0xFFFFA700),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  )
+                ],
+              ),
             ),
           ),
           InkWell(

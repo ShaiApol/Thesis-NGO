@@ -29,7 +29,7 @@ class _GroupMessageState extends State<GroupMessage> {
   bool ready = false;
   UserSingleton userSingleton = UserSingleton();
   TextEditingController controller = TextEditingController();
-  List<Map<String, Map>> user_widgets = [];
+  Map<String, Map<String, String>> user_widgets = {};
   String title = "";
 
   void handleMessageSubmit(String msg) async {
@@ -76,14 +76,12 @@ class _GroupMessageState extends State<GroupMessage> {
       if (user_doc.exists) {
         var data = user_doc.data() as Map;
         setState(() {
-          user_widgets.add({
-            data['email']: {
-              "profile_picture": data['profile_picture'],
-              "first_name": data['first_name'],
-              "last_name": data['last_name'],
-              "email": data['email']
-            }
-          });
+          user_widgets[data['email']] = {
+            "profile_picture": data['profile_picture'],
+            "first_name": data['first_name'],
+            "last_name": data['last_name'],
+            "email": data['email']
+          };
         });
       }
     }
@@ -216,12 +214,14 @@ class _GroupMessageState extends State<GroupMessage> {
                               padding: EdgeInsets.all(16),
                               child: Row(
                                 children: [
-                                  if (userSingleton.user!.profilePicture !=
-                                      null) ...[
+                                  if (user_widgets[data['sender']]![
+                                          'profile_picture'] as String !=
+                                      "") ...[
                                     CircleAvatar(
                                       radius: 16,
                                       backgroundImage: NetworkImage(
-                                          userSingleton.user!.profilePicture!),
+                                          user_widgets[data['sender']]![
+                                              'profile_picture'] as String),
                                     ),
                                     SizedBox(
                                       width: 12,

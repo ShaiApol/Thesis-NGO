@@ -119,7 +119,7 @@ class _AnnouncementsState extends State<Announcements> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(e.data()['description'])
+                                    Text(e.data()['description'] ?? "")
                                   ],
                                 ),
                               ),

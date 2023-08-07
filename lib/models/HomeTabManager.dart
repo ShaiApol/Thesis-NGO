@@ -1,6 +1,9 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:project_ngo/Messages.dart';
 import 'package:project_ngo/components.dart';
 import 'package:project_ngo/models/Calendar.dart';
@@ -191,7 +194,24 @@ class _HomeTabManagerState extends State<HomeTabManager> {
                                   ),
                                   ElevatedButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        //save image to gallery
+                                        _saveNetworkImage() async {
+                                          var response = await Dio().get(
+                                              e.photo!,
+                                              options: Options(
+                                                  responseType:
+                                                      ResponseType.bytes));
+                                          final result =
+                                              await ImageGallerySaver.saveImage(
+                                                  Uint8List.fromList(
+                                                      response.data),
+                                                  quality: 60,
+                                                  name: "certificate");
+                                          print(result);
+                                        }
+
+                                        _saveNetworkImage().then(
+                                            (value) => Navigator.pop(context));
                                       },
                                       child: Text(
                                         "Download",
@@ -242,13 +262,15 @@ class _HomeTabManagerState extends State<HomeTabManager> {
               ),
               if (rewards.isNotEmpty)
                 ...rewards.map((e) {
-                  return e.renderAsRowExpandedCard(onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return e.renderAsBottomModal(context);
-                        });
-                  });
+                  return Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: e.renderAsRowExpandedCard(onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return e.renderAsBottomModal(context);
+                            });
+                      }));
                 }).toList()
               else
                 Header3(

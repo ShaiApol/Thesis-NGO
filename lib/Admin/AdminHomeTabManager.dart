@@ -328,13 +328,15 @@ class _AdminHomeTabManagerState extends State<AdminHomeTabManager> {
               ),
               if (rewards.isNotEmpty)
                 ...rewards.map((e) {
-                  return e.renderAsRowExpandedCard(onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return e.renderAsBottomModal(context);
-                        });
-                  });
+                  return Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child: e.renderAsRowExpandedCard(onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return e.renderAsBottomModal(context);
+                            });
+                      }));
                 }).toList()
               else
                 Header3(

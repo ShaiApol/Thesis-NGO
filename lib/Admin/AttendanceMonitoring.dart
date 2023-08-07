@@ -51,97 +51,107 @@ class _AttendanceMonitoringState extends State<AttendanceMonitoring> {
                                             children: [
                                               ...snapshot.data!.docs.map((e) {
                                                 var data = e.data() as Map;
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    Training training = Training(
-                                                        id: e.id,
-                                                        name: data['name'],
-                                                        description:
-                                                            data['description'],
-                                                        date: data['date'],
-                                                        location:
-                                                            data['location'],
-                                                        photo: data['photo'],
-                                                        present:
-                                                            data['present'] ??
+                                                return Padding(
+                                                    padding: EdgeInsets.only(
+                                                        bottom: 16),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        Training training = Training(
+                                                            id: e.id,
+                                                            name: data['name'],
+                                                            description: data[
+                                                                'description'],
+                                                            date: data['date'],
+                                                            location: data[
+                                                                'location'],
+                                                            photo:
+                                                                data['photo'],
+                                                            present: data[
+                                                                    'present'] ??
                                                                 [],
-                                                        lateAttendees: data[
-                                                                'late_attendees'] ??
-                                                            []);
-                                                    showModalBottomSheet(
-                                                        context: context,
-                                                        builder: (context) {
-                                                          return AttendanceMonitoringPopUp(
-                                                              training:
-                                                                  training);
-                                                        });
-                                                  },
-                                                  child: Container(
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16),
-                                                      color: Color(0xFF283F4D),
-                                                    ),
-                                                    clipBehavior: Clip.hardEdge,
-                                                    child: Row(children: [
-                                                      Expanded(
-                                                          child: Padding(
-                                                        padding:
-                                                            EdgeInsets.all(16),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Text(
-                                                              data['name'],
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            SizedBox(height: 8),
-                                                            Row(
+                                                            lateAttendees: data[
+                                                                    'late_attendees'] ??
+                                                                []);
+                                                        showModalBottomSheet(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return AttendanceMonitoringPopUp(
+                                                                  training:
+                                                                      training);
+                                                            });
+                                                      },
+                                                      child: Container(
+                                                        height: 100,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(16),
+                                                          color:
+                                                              Color(0xFF283F4D),
+                                                        ),
+                                                        clipBehavior:
+                                                            Clip.hardEdge,
+                                                        child: Row(children: [
+                                                          Expanded(
+                                                              child: Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    16),
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
                                                               children: [
-                                                                Icon(
-                                                                  Icons
-                                                                      .calendar_month,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 4,
-                                                                ),
                                                                 Text(
-                                                                  retrieveStringFormattedDate(
-                                                                      data[
-                                                                          'date']),
+                                                                  data['name'],
                                                                   style: TextStyle(
                                                                       color: Colors
-                                                                          .white),
+                                                                          .white,
+                                                                      fontSize:
+                                                                          20,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 8),
+                                                                Row(
+                                                                  children: [
+                                                                    Icon(
+                                                                      Icons
+                                                                          .calendar_month,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 4,
+                                                                    ),
+                                                                    Text(
+                                                                      retrieveStringFormattedDate(
+                                                                          data[
+                                                                              'date']),
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    )
+                                                                  ],
                                                                 )
                                                               ],
-                                                            )
-                                                          ],
-                                                        ),
-                                                      )),
-                                                      Image.network(
-                                                        data['photo'],
-                                                        height: 100,
-                                                        width: 100,
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    ]),
-                                                  ),
-                                                );
+                                                            ),
+                                                          )),
+                                                          Image.network(
+                                                            data['photo'],
+                                                            height: 100,
+                                                            width: 100,
+                                                            fit: BoxFit.cover,
+                                                          )
+                                                        ]),
+                                                      ),
+                                                    ));
                                               })
                                             ],
                                           );

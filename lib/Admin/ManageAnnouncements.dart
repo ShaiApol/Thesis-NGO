@@ -115,11 +115,19 @@ class _ManageAnnouncementsState extends State<ManageAnnouncements> {
                                                         SizedBox(
                                                           height: 8,
                                                         ),
-                                                        Text(
-                                                          data["description"],
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
+                                                        Container(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.8,
+                                                          child: Text(
+                                                            data["description"],
+                                                            maxLines: 1,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          ),
                                                         ),
                                                         Row(
                                                           children: [

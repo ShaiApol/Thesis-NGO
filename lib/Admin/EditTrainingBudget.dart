@@ -47,79 +47,84 @@ class _EditTrainingBudgetState extends State<EditTrainingBudget> {
                               itemBuilder: (context, index) {
                                 var training_data =
                                     snapshot.data!.docs[index].data();
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return EditTrainingBudgetView(
-                                          id: snapshot.data!.docs[index].id,
-                                          document: training_data);
-                                    }));
-                                  },
-                                  child: Container(
-                                    height: 120,
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Color(0xFF29404E),
-                                    ),
-                                    child: Row(children: [
-                                      Expanded(
-                                          child: Padding(
-                                        padding: EdgeInsets.all(16),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(training_data['name'],
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Row(
+                                return Padding(
+                                    padding: EdgeInsets.only(bottom: 16),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return EditTrainingBudgetView(
+                                              id: snapshot.data!.docs[index].id,
+                                              document: training_data);
+                                        }));
+                                      },
+                                      child: Container(
+                                        height: 120,
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          color: Color(0xFF29404E),
+                                        ),
+                                        child: Row(children: [
+                                          Expanded(
+                                              child: Padding(
+                                            padding: EdgeInsets.all(16),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Icon(
-                                                  Icons.calendar_month,
-                                                  color: Colors.white,
+                                                Text(training_data['name'],
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.calendar_month,
+                                                      color: Colors.white,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Text(
+                                                      retrieveStringFormattedDate(
+                                                          training_data[
+                                                              'date']),
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    )
+                                                  ],
                                                 ),
                                                 SizedBox(
-                                                  width: 4,
+                                                  height: 4,
                                                 ),
                                                 Text(
-                                                  retrieveStringFormattedDate(
-                                                      training_data['date']),
+                                                  "Edit Training Budget",
                                                   style: TextStyle(
                                                       color: Colors.white),
                                                 )
                                               ],
                                             ),
-                                            SizedBox(
-                                              height: 4,
-                                            ),
-                                            Text(
-                                              "Edit Training Budget",
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            )
-                                          ],
-                                        ),
-                                      )),
-                                      Image.network(
-                                        training_data['photo'],
-                                        fit: BoxFit.cover,
-                                        width: 120,
-                                      )
-                                    ]),
-                                  ),
-                                );
+                                          )),
+                                          Image.network(
+                                            training_data['photo'],
+                                            fit: BoxFit.cover,
+                                            width: 120,
+                                          )
+                                        ]),
+                                      ),
+                                    ));
                               });
                         } else {
                           return Center(child: CircularProgressIndicator());

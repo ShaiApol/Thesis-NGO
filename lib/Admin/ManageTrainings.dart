@@ -236,7 +236,7 @@ class _ManageTrainingsState extends State<ManageTrainings> {
                                                                             .add({
                                                                           "name":
                                                                               "${(e.data() as Map)['name']} Cancelled",
-                                                                          "content":
+                                                                          "description":
                                                                               "The training ${(e.data() as Map)['name']} has been cancelled.",
                                                                           "photo":
                                                                               (e.data() as Map)['photo']

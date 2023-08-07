@@ -186,7 +186,15 @@ class _MessageState extends State<Message> {
                                 padding: EdgeInsets.all(16),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    CircleAvatar(
+                                        radius: 16,
+                                        backgroundImage: NetworkImage(
+                                            widget.profile_picture)),
+                                    SizedBox(
+                                      width: 16,
+                                    ),
+                                    Expanded(
+                                        child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius:
@@ -196,7 +204,7 @@ class _MessageState extends State<Message> {
                                         data['message'],
                                         style: TextStyle(color: Colors.black),
                                       ),
-                                    )
+                                    )),
                                   ],
                                 ),
                               );

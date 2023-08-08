@@ -78,7 +78,7 @@ class HeatmapState extends State<Heatmap> {
                   child: WebviewScaffold(
                 ignoreSSLErrors: true,
                 url:
-                    'https://vt-ready-certificate-server.onrender.com/generateHeatmap?userLocations=0,0${users}',
+                    'https://vt-ready-certserver.onrender.com//generateHeatmap?userLocations=0,0${users}',
               )),
             AdminBottomBar()
           ])),

@@ -15,9 +15,9 @@ class CertificateGenerator {
   Future<Uint8List> generateImage() async {
     //This will fetch the image from an API
     print(
-        "Attempting to generate a certificate in https://vt-ready-certificate-server.onrender.com/generateCertificate?name=${name}&training_name=${training_name}&day=${day}&month=${month}&year=${year}");
+        "Attempting to generate a certificate in https://vt-ready-certserver.onrender.com/generateCertificate?name=${name}&training_name=${training_name}&day=${day}&month=${month}&year=${year}");
     var res = await http.get(Uri.parse(
-        'https://vt-ready-certificate-server.onrender.com/generateCertificate?name=${name}&training_name=${training_name}&day=${day}&month=${month}&year=${year}'));
+        'https://vt-ready-certserver.onrender.com/generateCertificate?name=${name}&training_name=${training_name}&day=${day}&month=${month}&year=${year}'));
 
     return res.bodyBytes;
   }

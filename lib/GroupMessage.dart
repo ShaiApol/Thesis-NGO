@@ -77,7 +77,7 @@ class _GroupMessageState extends State<GroupMessage> {
         var data = user_doc.data() as Map;
         setState(() {
           user_widgets[data['email']] = {
-            "profile_picture": data['profile_picture'],
+            "profile_picture": data['profile_picture'] ?? "",
             "first_name": data['first_name'],
             "last_name": data['last_name'],
             "email": data['email']

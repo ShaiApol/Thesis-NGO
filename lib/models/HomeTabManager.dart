@@ -163,67 +163,70 @@ class _HomeTabManagerState extends State<HomeTabManager> {
               ),
               if (certifications.isNotEmpty)
                 ...certifications.map((e) {
-                  return e.renderAsRowExpandedCard(onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                              color: Color(0xFF283F4D),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    child: Image.network(
-                                      width: 520,
-                                      e.photo!,
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Text(
-                                    "Congratulations on completing this Training!",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  Text(
-                                    "You can download your certificate now.",
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        //save image to gallery
-                                        _saveNetworkImage() async {
-                                          var response = await Dio().get(
-                                              e.photo!,
-                                              options: Options(
-                                                  responseType:
-                                                      ResponseType.bytes));
-                                          final result =
-                                              await ImageGallerySaver.saveImage(
-                                                  Uint8List.fromList(
-                                                      response.data),
-                                                  quality: 60,
-                                                  name: "certificate");
-                                          print(result);
-                                        }
+                  return e.renderAsRowExpandedCard(
+                      onPressed: () {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return Container(
+                                  color: Color(0xFF283F4D),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        child: Image.network(
+                                          width: 520,
+                                          e.photo!,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      Text(
+                                        "Congratulations on completing this Training!",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Text(
+                                        "You can download your certificate now.",
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            //save image to gallery
+                                            _saveNetworkImage() async {
+                                              var response = await Dio().get(
+                                                  e.photo!,
+                                                  options: Options(
+                                                      responseType:
+                                                          ResponseType.bytes));
+                                              final result =
+                                                  await ImageGallerySaver
+                                                      .saveImage(
+                                                          Uint8List.fromList(
+                                                              response.data),
+                                                          quality: 60,
+                                                          name: "certificate");
+                                              print(result);
+                                            }
 
-                                        _saveNetworkImage().then(
-                                            (value) => Navigator.pop(context));
-                                      },
-                                      child: Text(
-                                        "Download",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold),
-                                      )),
-                                ],
-                              ));
-                        });
-                  });
+                                            _saveNetworkImage().then((value) =>
+                                                Navigator.pop(context));
+                                          },
+                                          child: Text(
+                                            "Download",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ],
+                                  ));
+                            });
+                      },
+                      context: context);
                 }).toList()
               else
                 Header3(

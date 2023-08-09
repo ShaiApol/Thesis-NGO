@@ -19,6 +19,7 @@ class CertificateFetcher {
 
     for (var doc in docs.docs) {
       certificates.add(Certificate(
+          ref: doc.reference,
           activity_id: doc.id,
           activity_type: (doc.data() as Map)['activity_type'],
           date: (doc.data() as Map)['date'],

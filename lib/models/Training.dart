@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ngo/components.dart';
 import 'package:project_ngo/utils.dart';
@@ -83,12 +84,18 @@ class Training extends Cards {
                       ],
                     ),
                   )),
-                  Image.network(
-                    photo,
-                    height: 96,
-                    width: 96,
-                    fit: BoxFit.cover,
-                  ),
+                  if (photo != "")
+                    Image.network(
+                      photo,
+                      height: 96,
+                      width: 96,
+                      fit: BoxFit.cover,
+                    )
+                  else
+                    SizedBox(
+                      height: 96,
+                      width: 96,
+                    ),
                 ],
               ),
             ),

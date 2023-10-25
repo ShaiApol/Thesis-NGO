@@ -22,7 +22,7 @@ class CertificationFetcher {
           .get();
       if (entry.exists) {
         certifications.add(Certification(
-            ref: entry.reference,
+            ref: certificate.ref,
             name: entry.data()!['name'],
             rated: entry.data()!['rated'],
             activity_photo: entry.data()!['photo'],

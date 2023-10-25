@@ -4,7 +4,7 @@ class Certificate {
   String activity_id;
   String? certificate_picture;
   String activity_type;
-  DocumentReference? ref;
+  DocumentReference ref;
   final Map<String, dynamic> date;
 
   Certificate({

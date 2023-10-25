@@ -413,6 +413,7 @@ class Header3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
+        overflow: TextOverflow.ellipsis,
         textAlign: align,
         style: color == null
             ? style

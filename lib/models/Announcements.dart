@@ -99,10 +99,42 @@ class _AnnouncementsState extends State<Announcements> {
                             Expanded(
                                 child: GestureDetector(
                               onTap: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Home()));
+                                //show bottom modal sheet
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        color: Color(0xFF283F4D),
+                                        padding: EdgeInsets.all(16),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (e.data()['photo'] != "")
+                                              Image.network(
+                                                e.data()['photo'],
+                                                width: 250,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            SizedBox(height: 16),
+                                            Text(
+                                              "${e.data()['name']}",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            Text(
+                                                "${e.data()['description'] ?? ""}"),
+                                            SizedBox(height: 8),
+                                            Text(
+                                                "Posted on ${new DateTime.fromMillisecondsSinceEpoch(e.data()['date'].seconds * 1000) ?? ""}"),
+                                          ],
+                                        ),
+                                      );
+                                    });
                               },
                               child: Container(
                                 padding: EdgeInsets.all(16),

@@ -106,176 +106,182 @@ class _ManageTrainingsState extends State<ManageTrainings> {
                                                                 .circular(8)),
                                                     child: Row(
                                                       children: [
-                                                        Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      top: 12,
-                                                                      left: 12),
-                                                              child: Header3(
-                                                                text: data[
-                                                                    "name"],
-                                                                color: Colors
-                                                                    .white,
+                                                        Flexible(
+                                                            child: Container(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        top: 12,
+                                                                        left:
+                                                                            12),
+                                                                child: Header3(
+                                                                  text: data[
+                                                                      "name"],
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
                                                               ),
-                                                            ),
-                                                            SizedBox(
-                                                              height: 8,
-                                                            ),
-                                                            Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 12),
-                                                              child: Text(
-                                                                data[
-                                                                    "description"],
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white),
+                                                              SizedBox(
+                                                                height: 8,
                                                               ),
-                                                            ),
-                                                            Row(
-                                                              children: [
-                                                                TextButton(
-                                                                    onPressed:
-                                                                        () {
-                                                                      Training training = Training(
-                                                                          id: e
-                                                                              .id,
-                                                                          name: data[
-                                                                              'name'],
-                                                                          description: data[
-                                                                              'description'],
-                                                                          date: data[
-                                                                              'date'],
-                                                                          location: data[
-                                                                              'location'],
-                                                                          photo:
-                                                                              data['photo']);
-                                                                      Navigator.push(
-                                                                          context,
-                                                                          MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) {
-                                                                          return CreateNewTraining(
-                                                                            override:
-                                                                                training,
-                                                                          );
-                                                                        },
-                                                                      ));
-                                                                    },
-                                                                    child: Text(
-                                                                        "Edit")),
-                                                                TextButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      var cancel = await showModalBottomSheet(
-                                                                          context: context,
-                                                                          builder: (context) {
-                                                                            return Container(
-                                                                              padding: EdgeInsets.all(16),
-                                                                              child: Column(
-                                                                                children: [
-                                                                                  Expanded(child: SizedBox.shrink()),
-                                                                                  Text(
-                                                                                    "Are you sure you want to cancel this activity?",
-                                                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                                                                                    textAlign: TextAlign.center,
-                                                                                  ),
-                                                                                  SizedBox(
-                                                                                    height: 16,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    "Doing so will send a notification to all registered participants in the form of an announcement and a system message in the activity's group chat.",
-                                                                                    textAlign: TextAlign.center,
-                                                                                  ),
-                                                                                  SizedBox(
-                                                                                    height: 32,
-                                                                                  ),
-                                                                                  Row(
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                                    children: [
-                                                                                      ElevatedButton(
-                                                                                          onPressed: () {
-                                                                                            Navigator.pop(context, true);
-                                                                                          },
-                                                                                          child: Text("Yes")),
-                                                                                      ElevatedButton(
-                                                                                          onPressed: () {
-                                                                                            Navigator.pop(context, false);
-                                                                                          },
-                                                                                          child: Text("No"))
-                                                                                    ],
-                                                                                  ),
-                                                                                  Expanded(child: SizedBox.shrink())
-                                                                                ],
-                                                                              ),
+                                                              Padding(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            12),
+                                                                child: Text(
+                                                                  data[
+                                                                      "description"],
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  TextButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Training training = Training(
+                                                                            id: e
+                                                                                .id,
+                                                                            name:
+                                                                                data['name'],
+                                                                            description: data['description'],
+                                                                            date: data['date'],
+                                                                            location: data['location'],
+                                                                            photo: data['photo']);
+                                                                        Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                          builder:
+                                                                              (context) {
+                                                                            return CreateNewTraining(
+                                                                              override: training,
                                                                             );
+                                                                          },
+                                                                        ));
+                                                                      },
+                                                                      child: Text(
+                                                                          "Edit")),
+                                                                  TextButton(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        var cancel = await showModalBottomSheet(
+                                                                            context: context,
+                                                                            builder: (context) {
+                                                                              return Container(
+                                                                                padding: EdgeInsets.all(16),
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    Expanded(child: SizedBox.shrink()),
+                                                                                    Text(
+                                                                                      "Are you sure you want to cancel this activity?",
+                                                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                                                                                      textAlign: TextAlign.center,
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 16,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      "Doing so will send a notification to all registered participants in the form of an announcement and a system message in the activity's group chat.",
+                                                                                      textAlign: TextAlign.center,
+                                                                                    ),
+                                                                                    SizedBox(
+                                                                                      height: 32,
+                                                                                    ),
+                                                                                    Row(
+                                                                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                                      children: [
+                                                                                        ElevatedButton(
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context, true);
+                                                                                            },
+                                                                                            child: Text("Yes")),
+                                                                                        ElevatedButton(
+                                                                                            onPressed: () {
+                                                                                              Navigator.pop(context, false);
+                                                                                            },
+                                                                                            child: Text("No"))
+                                                                                      ],
+                                                                                    ),
+                                                                                    Expanded(child: SizedBox.shrink())
+                                                                                  ],
+                                                                                ),
+                                                                              );
+                                                                            });
+
+                                                                        if (cancel) {
+                                                                          FirebaseFirestore
+                                                                              firestore =
+                                                                              FirebaseFirestore.instance;
+                                                                          await firestore
+                                                                              .collection(
+                                                                                  "trainings")
+                                                                              .doc(e
+                                                                                  .id)
+                                                                              .update({
+                                                                            "cancelled":
+                                                                                true
                                                                           });
 
-                                                                      if (cancel) {
-                                                                        FirebaseFirestore
-                                                                            firestore =
-                                                                            FirebaseFirestore.instance;
-                                                                        await firestore
-                                                                            .collection(
-                                                                                "trainings")
-                                                                            .doc(e
-                                                                                .id)
-                                                                            .update({
-                                                                          "cancelled":
-                                                                              true
-                                                                        });
-
-                                                                        await firestore
-                                                                            .collection("announcements")
-                                                                            .add({
-                                                                          "name":
-                                                                              "${(e.data() as Map)['name']} Cancelled",
-                                                                          "description":
-                                                                              "The training ${(e.data() as Map)['name']} has been cancelled.",
-                                                                          "photo":
-                                                                              (e.data() as Map)['photo']
-                                                                        });
-                                                                      } else {
-                                                                        FirebaseFirestore
-                                                                            firestore =
-                                                                            FirebaseFirestore.instance;
-                                                                        firestore
-                                                                            .collection(
-                                                                                "trainings")
-                                                                            .doc(e
-                                                                                .id)
-                                                                            .update({
-                                                                          "cancelled":
-                                                                              false
-                                                                        });
-                                                                      }
-                                                                    },
-                                                                    child: (e.data()
-                                                                                as Map)[
-                                                                            'cancelled']
-                                                                        ? Text(
-                                                                            "Cancelled")
-                                                                        : Text(
-                                                                            "Cancel"))
-                                                              ],
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Expanded(
-                                                            child: SizedBox
-                                                                .shrink()),
-                                                        Image.network(
-                                                          data['photo'],
-                                                          height: 105,
-                                                          width: 105,
-                                                          fit: BoxFit.cover,
-                                                        )
+                                                                          await firestore
+                                                                              .collection("announcements")
+                                                                              .add({
+                                                                            "name":
+                                                                                "${(e.data() as Map)['name']} Cancelled",
+                                                                            "description":
+                                                                                "The training ${(e.data() as Map)['name']} has been cancelled.",
+                                                                            "photo":
+                                                                                (e.data() as Map)['photo']
+                                                                          });
+                                                                        } else {
+                                                                          FirebaseFirestore
+                                                                              firestore =
+                                                                              FirebaseFirestore.instance;
+                                                                          firestore
+                                                                              .collection(
+                                                                                  "trainings")
+                                                                              .doc(e
+                                                                                  .id)
+                                                                              .update({
+                                                                            "cancelled":
+                                                                                false
+                                                                          });
+                                                                        }
+                                                                      },
+                                                                      child: (e.data() as Map)[
+                                                                              'cancelled']
+                                                                          ? Text(
+                                                                              "Cancelled")
+                                                                          : Text(
+                                                                              "Cancel"))
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                        if (data['photo'] !=
+                                                            null)
+                                                          Container(
+                                                            height: 105,
+                                                            width: 105,
+                                                            child:
+                                                                Image.network(
+                                                              data['photo'],
+                                                              height: 105,
+                                                              width: 105,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
                                                       ],
                                                     ),
                                                   ),

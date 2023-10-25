@@ -12,8 +12,11 @@ class TrainingFetcher {
   Future<List<Training>> fetch() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     List<Training> trainings = [];
-    QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await firestore.collection('trainings').get();
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await firestore
+        .collection('trainings')
+        .where("photo", isNotEqualTo: "")
+        .where("photo", isNotEqualTo: null)
+        .get();
     for (var doc in querySnapshot.docs) {
       Map<String, dynamic> data = doc.data();
 
@@ -23,7 +26,7 @@ class TrainingFetcher {
         description: data['description'],
         date: data['date'],
         location: data['location'],
-        photo: data['photo'],
+        photo: data['photo'] ?? null,
         attendees: data['attendees'] ?? null,
         present: data['present'] ?? null,
         certificates: data['certificates'] ?? null,

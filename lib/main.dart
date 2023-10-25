@@ -69,7 +69,6 @@ class _MainAppState extends State<MainApp> {
         await retrieveUserFromFirebase(user.email!).then((value) async {
           if (value != null) {
             if (value.verified) {
-              // value.verified (with verification) //true (no verification)
               UserSingleton userSingleton = UserSingleton();
               userSingleton.user = value;
               userSingleton.setProfilePicture(value.profilePicture);

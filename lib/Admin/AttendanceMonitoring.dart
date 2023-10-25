@@ -143,12 +143,14 @@ class _AttendanceMonitoringState extends State<AttendanceMonitoring> {
                                                               ],
                                                             ),
                                                           )),
-                                                          Image.network(
-                                                            data['photo'],
-                                                            height: 100,
-                                                            width: 100,
-                                                            fit: BoxFit.cover,
-                                                          )
+                                                          if (data["photo"] !=
+                                                              null)
+                                                            Image.network(
+                                                              data['photo'],
+                                                              height: 100,
+                                                              width: 100,
+                                                              fit: BoxFit.cover,
+                                                            )
                                                         ]),
                                                       ),
                                                     ));

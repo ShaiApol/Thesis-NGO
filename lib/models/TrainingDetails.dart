@@ -10,8 +10,10 @@ import 'package:project_ngo/utils.dart';
 import 'Training.dart';
 
 class TrainingDetails extends StatefulWidget {
-  TrainingDetails({Key? key, required this.training}) : super(key: key);
+  TrainingDetails({Key? key, required this.training, this.refresh})
+      : super(key: key);
   final Training training;
+  final Function? refresh;
   @override
   _TrainingDetailsState createState() => _TrainingDetailsState();
 }
@@ -171,7 +173,7 @@ class _TrainingDetailsState extends State<TrainingDetails> {
                               "group_messages":
                                   FieldValue.arrayUnion([widget.training.id])
                             });
-
+                            if (widget.refresh != null) widget.refresh!();
                             Navigator.pop(context);
                           }
                         },
@@ -243,8 +245,8 @@ class _TrainingDetailsState extends State<TrainingDetails> {
                               "attendees": FieldValue.arrayRemove(
                                   [userSingleton.user!.email])
                             });
-
                             Navigator.pop(context);
+                            if (widget.refresh != null) widget.refresh!();
                           },
                           child: Container(
                             padding: EdgeInsets.symmetric(vertical: 16),
